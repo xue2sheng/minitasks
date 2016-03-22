@@ -3,16 +3,7 @@
 #include <dlfcn.h>
 
 #include "boost/program_options.hpp"
-#include "basic/basic.hpp"
-
-namespace
-{
-    const size_t ERROR_IN_COMMAND_LINE = 1;
-    const size_t SUCCESS = 0;
-    const size_t ERROR_UNHANDLED_EXCEPTION = 2;
-    const size_t ERROR_DYNAMIC_LIBRARY = 3;
-    
-} // namespace
+#include "main.hpp"
 
 int main(int argc, char** argv)
 {
