@@ -21,6 +21,10 @@ This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8), latest
        
 But if you're working on a more stale but robust box, i.e. *RedHat 7*, don't forget to launch **cmake** with enough information to get to latest compilers/libraries (probably previously complied by you anyway):
 
-       rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/opt/gcc/boost -DRPATH_LIB64=/opt/gcc/lib64 -DCMAKE_C_COMPILER=/opt/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/opt/gcc/bin/g++ ..
+       rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/opt/gcc/boost -DCMAKE_C_COMPILER=/opt/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/opt/gcc/bin/g++ ..
        
-       
+**Note:** Default flags are defined to statically link as much as possible in order not to depend on development latest compilers/libraries on future deployment machines:
+
+       set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -static-libstdc++ -static-libgcc -g")
+       set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")
+       set(Boost_USE_STATIC_RUNTIME ON CACHE BOOL "use static runtime from Boost")       

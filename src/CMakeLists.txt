@@ -1,3 +1,4 @@
+set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -static-libstdc++ -static-libgcc -g")
 file(GLOB MARKDOWN *.md)
 file(GLOB SRC *.cpp *.hpp)
 add_subdirectory(basic)
