@@ -57,7 +57,6 @@ int main(int argc, char** argv)
         // application code here
         
         // load basic library
-        Expects( !plugin_path.empty() && !plugin_name.empty() );
         std::string plugin = plugin_path + DIR_SEP + LIB_PRE + plugin_name + LIB_EXT;
         void* library = dlopen(plugin.c_str(), RTLD_NOW);
         if (!library) {
@@ -69,7 +68,9 @@ int main(int argc, char** argv)
         dlerror();
         
         // load the symbols
-        int (*basic)() = dlsym(library, "basic");
+	using basic = int (*)();
+
+        basic handle = (basic) dlsym(library, "basic");
         const char* dlsym_error = dlerror();
         if (dlsym_error) {
             std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
@@ -77,10 +78,7 @@ int main(int argc, char** argv)
         }
         
         // use the class
-        //std::cout << "The value is: " << (*basic)() << '\n';
-        
-        // destroy the class
-        destroy_plugin(instance);
+        std::cout << "The value is: " << handle() << '\n';
         
         // unload the library
         dlclose(library);
