@@ -1,6 +1,6 @@
 {
   "name": "Minitasks",
   "tagline": "Infrastructure to load small tasks and manage them ",
-  "body": "# minitasks\r\nInfrastructure to load small tasks and manage them \r\n",
+  "body": "# minitasks\r\n\r\nInfrastructure to load small tasks and manage them \r\n\r\n![Summary](images/summary.png)\r\n<!-- java -jar /opt/plantuml/plantuml.jar README.md -o images -->\r\n<!--\r\n@startuml summary.png\r\ntop to bottom direction\r\nskinparam packageStyle rect\r\nrectangle \"Launch\\ndifferent tasks\" {\r\n}\r\n@enduml\r\n-->\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
