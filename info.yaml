@@ -1,0 +1,3 @@
+# Global human-friendly version id's for this project
+# Final version id's will include automatically generated Git Hash code as well
+VERSION_INFO: 0.0.1

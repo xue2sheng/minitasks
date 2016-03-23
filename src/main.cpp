@@ -4,6 +4,7 @@
 
 #include "boost/program_options.hpp"
 #include "main.hpp"
+#include "version.hpp"
 
 int main(int argc, char** argv)
 {
@@ -17,6 +18,7 @@ int main(int argc, char** argv)
         po::options_description desc("Options");
         desc.add_options()
         ("help", "Print help messages")
+        ("version,v", "Print version messages")
         ("location,L", po::value<std::string>(&plugin_path)->default_value("."), "where libraries are located")
         ("plugin,P", po::value<std::string>(&plugin_name)->default_value("basic"), "name of the plugin to be loaded");
       
@@ -35,6 +37,13 @@ int main(int argc, char** argv)
                 return SUCCESS;
             }
             
+            // --version option
+            if ( vm.count("version") )
+            {
+                std::cout << VERSION_INFO << std::endl;
+                return SUCCESS;
+            }
+
             // throws on error, so do after help in case there are any problems
             po::notify(vm);
         }

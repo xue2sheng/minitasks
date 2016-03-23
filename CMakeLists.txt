@@ -27,6 +27,41 @@ else ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   message(FATAL_ERROR "Not supported") 
 endif()
 
+# Extract info.yaml versions
+set(INFO_YAML "${CMAKE_SOURCE_DIR}/info.yaml")
+message(STATUS "INFO_YAML: ${INFO_YAML}")
+file(READ "${INFO_YAML}" INFO)
+string(REGEX REPLACE ";" "\\\\;" INFO "${INFO}")
+string(REGEX REPLACE "\n" ";" INFO "${INFO}")
+foreach(LINE "${INFO}")
+ string(REGEX MATCH "[ ]*VERSION_INFO: .*" VERSION_LINE "${LINE}")
+ if(DEFINED VERSION_LINE)
+     string(REGEX REPLACE ";" "" VERSION_LINE "${VERSION_LINE}")
+     string(STRIP "${VERSION_LINE}" VERSION_LINE)
+ else()
+     message(FATAL_ERROR "VERSION_INFO not found at ${INFO_YAML}")
+ endif()
+endforeach(LINE "${INFO}")
+ 
+# Add GIT info
+execute_process(
+  COMMAND git log -1 --format=%H 
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} 
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+set(VERSION_INFO "${VERSION_LINE}_${GIT_COMMIT_HASH}")
+message(STATUS "${VERSION_INFO}")
+
+# Create .hpp version file
+set(VERSION_HPP_IN "${CMAKE_SOURCE_DIR}/src/version.hpp.in")
+set(VERSION_HPP_OUT "${CMAKE_SOURCE_DIR}/src/version.hpp")
+
+configure_file(${VERSION_HPP_IN} ${VERSION_HPP_OUT})
+
+# Get ready for unit tests 
 enable_testing()
+
+# recursive call to code folders
 add_subdirectory(src)
 add_subdirectory(test)
