@@ -15,15 +15,19 @@ rectangle "Launch\ndifferent tasks" {
 
 ## Requirements
 
-This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8), latest **boost** libraries (>=1.58) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
+This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7xx), latest **boost** libraries (>=1.58) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
 
        rm -rf build && mkdir build && cd build && cmake ..
        
-But if you're working on a more stale but robust box, i.e. *RedHat 7*, don't forget to launch **cmake** with enough information to get to latest compilers/libraries (probably previously complied by you anyway):
+But if you're working on a more stale but robust box, i.e. *RedHat 7*, don't forget to launch **cmake** with enough information to get to latest compilers/libraries (provided specifically compiled boost libraries at /opt/gcc/boost):
 
        rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/opt/gcc/boost -DCMAKE_C_COMPILER=/opt/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/opt/gcc/bin/g++ ..
-       
-**Note:** Default flags are defined to statically link as much as possible in order not to depend on development latest compilers/libraries on future deployment machines:
+
+Something similar if you work on OSX (provided Homebrew installed boost libraries at /usr/local/Cellar/boost/1.60.0_1):
+
+       rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++       
+
+**Note:** Default flags are defined to statically link as much as possible depending on different systems in order not to require latest development compilers/libraries on deployment machines:
 
        set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -static-libstdc++ -static-libgcc -g")
        set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")

@@ -1,6 +1,32 @@
 cmake_minimum_required (VERSION 3.5)
 project (minitasks)
 
+# Boost libraries required
+set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")
+set(Boost_USE_STATIC_RUNTIME ON CACHE BOOL "use static runtime from Boost")
+set(Boost_USE_MULTITHREADED ON)
+find_package( Boost )
+if( Boost_FOUND )
+  message(STATUS "Boost LIBRARIES: ${Boost_LIBRARIES}")
+else()
+  message(FATAL_ERROR "Boost libraries requied")
+endif()
+
+# Different compiler support
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -Wno-deprecated-declarations -static-libstdc++ -static-libgcc -g") 
+  message(STATUS "GNU FLAGS: ${CMAKE_CXX_FLAGS}")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  message(STATUS "Clang FLAGS: ${CMAKE_CXX_FLAGS}")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+  set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -Wno-deprecated-declarations -stdlib=libc++ -g") 
+  message(STATUS "Apple Clang FLAGS: ${CMAKE_CXX_FLAGS}")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+  message(STATUS "Intel FLAGS: ${CMAKE_CXX_FLAGS}")
+else ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  message(FATAL_ERROR "Not supported") 
+endif()
+
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(test)
