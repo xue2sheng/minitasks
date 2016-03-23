@@ -33,6 +33,10 @@ build/
 # netbeans
 nbproject/
 
-# generated version files
+# generated files
 **/version.hpp
-
+**/Doxyfile 
+**/header.tex 
+**/md_filter.awk 
+**/*.pdf
+**/html/

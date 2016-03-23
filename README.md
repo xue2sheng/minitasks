@@ -23,7 +23,7 @@ But if you're working on a more stale but robust box, i.e. *RedHat 7*, don't for
 
        rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/opt/gcc/boost -DCMAKE_C_COMPILER=/opt/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/opt/gcc/bin/g++ ..
 
-If you happen to compile a specific version of **boost** libraries for a *clang* compiler:
+If you happen to compile a specific version of **boost** libraries for a *clang* compiler, but remember that they could depend on *libc++* and *libc++abi* when you deploy on a vanilla box:
 
        rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/opt/clang/boost -DCMAKE_C_COMPILER=/opt/clang/bin/clang -DCMAKE_CXX_COMPILER=/opt/clang/bin/clang++ ..
 

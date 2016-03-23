@@ -1,0 +1,53 @@
+# Mark index page for some specific markdown h1
+/^# @DOXYFILE_PROJECT_NAME@/ { print $0 " {#index}"; }
+
+# From markdown image into latex & html
+/^!\[.*\](.*)/ { 
+
+  # ![options](.....)
+  split($1,a,"["); split(a[2],b,"]"); options=b[1];
+  
+   # ![...](../../photo.png)
+   split(b[2],c,".png"); m=split(c[1],d,"/"); n=split(d[m],e,"("); photo=e[n];
+
+   # latex & html commands
+   print "\\image latex " photo ".png " options " \\image html " photo ".png"; 
+
+   # avoid duplicate images
+   next
+}
+
+# section for markdown h2
+/^## / {
+
+   # some pseudo-random integer + first word
+   $1="" ## 
+   if( $3 == "" )
+   {
+     printf "\\section section" FNR NF NR RLENGTH RSTART int(1+srand(FNR+NF+NR+RLENGTH+RSTART)*rand()*100);
+   }   
+   else # several words
+   { 
+      print "\\section section" FNR NF NR RLENGTH RSTART int(1+srand(FNR+NF+NR+RLENGTH+RSTART)*rand()*100) $2 $0;
+      next
+   }
+}
+
+# subsection for markdown h3
+/^### / {
+
+   # some pseudo-random integer + first word
+   $1="" ### 
+   if( $3 == "" )
+   {
+     printf "\\subsection subsection" FNR NF NR RLENGTH RSTART int(1+srand(FNR+NF+NR+RLENGTH+RSTART)*rand()*100);
+   }   
+   else # several words
+   { 
+      print "\\subsection subsection" FNR NF NR RLENGTH RSTART int(1+srand(FNR+NF+NR+RLENGTH+RSTART)*rand()*100) $2 $0;
+      next
+   }
+}
+
+## Don't remove ##
+1
