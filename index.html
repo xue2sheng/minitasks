@@ -30,6 +30,31 @@
 
 
 
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>This project is based on <strong>C++14</strong> standard (g++ &gt;= 5.2, clang++ &gt;= 3.8, apple clang++ &gt;= 7xx), latest <strong>boost</strong> libraries (&gt;=1.58) and expected as well a modern <em>cmake</em> (&gt;=3.5) so if you work on an updated develop environment, i.e, <em>Debian sid</em>, you are supposed to get by default the correct versions:</p>
+
+<pre><code>   rm -rf build &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake ..
+</code></pre>
+
+<p>But if you're working on a more stale but robust box, i.e. <em>RedHat 7</em>, don't forget to launch <strong>cmake</strong> with enough information to get to latest compilers/libraries (provided specifically compiled boost libraries at /opt/gcc/boost):</p>
+
+<pre><code>   rm -rf build &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake -DBOOST_ROOT=/opt/gcc/boost -DCMAKE_C_COMPILER=/opt/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/opt/gcc/bin/g++ ..
+</code></pre>
+
+<p>Something similar if you work on OSX (provided Homebrew installed boost libraries at /usr/local/Cellar/boost/1.60.0_1):</p>
+
+<pre><code>   rm -rf build &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++       
+</code></pre>
+
+<p><strong>Note:</strong> Default flags are defined to statically link as much as possible depending on different systems in order not to require latest development compilers/libraries on deployment machines:</p>
+
+<pre><code>   set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wno-unused-local-typedefs -static-libstdc++ -static-libgcc -g")
+   set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")
+   set(Boost_USE_STATIC_RUNTIME ON CACHE BOOL "use static runtime from Boost")       
+</code></pre>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/xue2sheng/minitasks">Minitasks</a> is maintained by <a href="https://github.com/xue2sheng">xue2sheng</a>.</span>
 
