@@ -56,8 +56,8 @@ message(STATUS "${VERSION_INFO}")
 # Create .hpp version file
 set(VERSION_HPP_IN "${CMAKE_SOURCE_DIR}/src/version.hpp.in")
 set(VERSION_HPP_OUT "${CMAKE_SOURCE_DIR}/src/version.hpp")
-
 configure_file(${VERSION_HPP_IN} ${VERSION_HPP_OUT})
+file(COPY ${VERSION_HPP_OUT} DESTINATION "${CMAKE_SOURCE_DIR}/test")
 
 # Get ready for unit tests 
 enable_testing()
