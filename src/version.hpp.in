@@ -2,6 +2,5 @@
 #define VERSION_HPP
 
 static const char* VERSION_INFO = "@VERSION_INFO@";
-static const char* TEST_VERSION = "@TEST_VERSION@";
 
 #endif // VERSION_HPP
