@@ -2,25 +2,79 @@ message(STATUS "CMAKE_BUILD_TOOL = ${CMAKE_BUILD_TOOL}")
 message(STATUS "CMAKE_COMMAND = ${CMAKE_COMMAND}")
 
 # Useful commands 
-set(INVOKE_CMAKE_SCRIPT ${CMAKE_COMMAND} -DLOCAL_SOURCE_DIR="${CMAKE_SOURCE_DIR}" -P) 
-set(INVOKE_CMAKE_SCRIPT_HARDCODED ${CMAKE_COMMAND} -DLOCAL_SOURCE_DIR="${CMAKE_SOURCE_DIR}" -DVERSION_HARDCODED=TRUE -P) 
+set(INVOKE_CMAKE_SCRIPT ${CMAKE_COMMAND} -P) 
 set(COPY_DIFF ${CMAKE_COMMAND} -E copy_if_different) 
 set(COPY_DIR ${CMAKE_COMMAND} -E copy_directory) 
-set(REMOVE_DIR ${CMAKE_COMMAND} -E remove_directory)
-set(REMOVE ${CMAKE_COMMAND} -E remove -f)
 set(ENV_CMD ${CMAKE_COMMAND} -E env ${EXTRA_ARG})
-
-# clean & regenerate git commit hash
-add_custom_target(clean_git_commit_hash ${REMOVE} ${PROJECT_BINARY_DIR}/Doxyfile
-   COMMAND ${REMOVE} ${PROJECT_BINARY_DIR}/header.tex
-   COMMAND ${REMOVE_DIR} ${PROJECT_BINARY_DIR}/latex
-   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-)
 
 ############# DOCUMENTATION ##############
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
+
+#########################
+# Add GIT info
+execute_process(
+  COMMAND git log -1 --format=%H 
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} 
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+######################## 
+set( WILDCARD "pepe" )
+set( DOXYFILE_PROJECT_NAME "${CMAKE_PROJECT_NAME}")
+set( DOXYFILE_PROJECT_NUMBER "999")
+set( CMAKE_GIT_COMMIT_HASH "${GIT_COMMIT_HASH}")
+set( DOXYFILE_PROJECT_BRIEF "${WILDCARD}")
+set( DOXYFILE_INPUT00 "${WILDCARD}")
+set( DOXYFILE_INPUT01 "${WILDCARD}")
+set( DOXYFILE_INPUT02 "${WILDCARD}")
+set( DOXYFILE_INPUT03 "${WILDCARD}")
+set( DOXYFILE_INPUT04 "${WILDCARD}")
+set( DOXYFILE_INPUT05 "${WILDCARD}")
+set( DOXYFILE_INPUT06 "${WILDCARD}")
+set( DOXYFILE_INPUT07 "${WILDCARD}")
+set( DOXYFILE_INPUT08 "${WILDCARD}")
+set( DOXYFILE_INPUT09 "${WILDCARD}")
+set( DOXYFILE_INPUT10 "${WILDCARD}")
+set( DOXYFILE_INPUT11 "${WILDCARD}")
+set( DOXYFILE_INPUT12 "${WILDCARD}")
+set( DOXYFILE_INPUT13 "${WILDCARD}")
+set( DOXYFILE_INPUT14 "${WILDCARD}")
+set( DOXYFILE_INPUT15 "${WILDCARD}")
+set( DOXYFILE_INPUT16 "${WILDCARD}")
+set( DOXYFILE_INPUT17 "${WILDCARD}")
+set( DOXYFILE_INPUT18 "${WILDCARD}")
+set( DOXYFILE_INPUT19 "${WILDCARD}")
+set( LOCAL_SOURCE_DIR "${CMAKE_SOURCE_DIR}")
+set( DOXYFILE_INPUT_FILTER "${CMAKE_BINARY_DIR}/md_filter.awk")
+set( DOXYFILE_FILTER_PATTERNS "${WILDCARD}")
+set( CMAKE_HEADER_OUT "${CMAKE_BINARY_DIR}/header.tex")
+###################################
+set( GIT_SYSTEM "${WILDCARD}")
+set( GIT_MODULES_STATUS "${WILDCARD}")
+set( CMAKE_GIT_DETAILS "${WILDCARD}")
+set( DOXYFILE_PROJECT_NUMBER_CORE "888")
+set( CMAKE_GIT_DETAILS_CORE "${WILDCARD}")
+set( DOXYFILE_PROJECT_NUMBER_BASE "777")
+set( CMAKE_GIT_DETAILS_BASE "${WILDCARD}")
+set( DOXYFILE_PROJECT_NUMBER_UI "666")
+set( CMAKE_GIT_DETAILS_UI "${WILDCARD}")
+set( DOXYFILE_PROJECT_NUMBER_PERSIST "555")
+set( CMAKE_GIT_DETAILS_PERSIST "${WILDCARD}")
+
+#########################
+######################### 
+# Create templates for documentation files
+set(DOXYFILE_IN "${CMAKE_SOURCE_DIR}/doc/Doxyfile.in")
+set(DOXYFILE_OUT "${CMAKE_BINARY_DIR}/Doxyfile")
+configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT})
+set(HEADER_TEX_IN "${CMAKE_SOURCE_DIR}/doc/header.tex.in")
+set(HEADER_TEX_OUT "${CMAKE_BINARY_DIR}/header.tex")
+configure_file(${HEADER_TEX_IN} ${HEADER_TEX_OUT})
+set(MD_FILTER_AWK_IN "${CMAKE_SOURCE_DIR}/doc/md_filter.awk.in")
+set(MD_FILTER_AWK_OUT "${CMAKE_BINARY_DIR}/md_filter.awk")
+configure_file(${MD_FILTER_AWK_IN} ${MD_FILTER_AWK_OUT})
 
  # TARGET
  set(TMP_PDF_FILE ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdf)
@@ -29,27 +83,29 @@ if(DOXYGEN_FOUND)
  set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
 
  # make image
- #add_custom_target( image ${INVOKE_CMAKE_SCRIPT} ${PROJECT_SOURCE_DIR}/image/CMakeLists.txt
- #   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
- #)
+ add_custom_target( image ${INVOKE_CMAKE_SCRIPT} ${PROJECT_SOURCE_DIR}/image/CMakeLists.txt
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+ )
 
- # make doc --> ALL
- add_custom_target( doc ALL ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
+ # make doc 
+ add_custom_target( doc ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
    COMMAND ${ENV_CMD} ${CMAKE_BUILD_TOOL} -Wno-dev -f ${PROJECT_BINARY_DIR}/latex/Makefile -C ${PROJECT_BINARY_DIR}/latex
-   COMMAND ${REMOVE_DIR} ${TMP_LATEX_DIR}
    COMMAND ${COPY_DIFF} ${PROJECT_BINARY_DIR}/latex/refman.pdf ${TMP_PDF_FILE}
    COMMAND ${COPY_DIR} ${PROJECT_BINARY_DIR}/html ${HTML_DIR}
-   #DEPENDS image
+   DEPENDS image
    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
  )
 
- # make install_doc
-# add_custom_target( get_doc echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
-#   COMMAND echo "PDF_FILE=${PDF_FILE}"
-#   COMMAND echo "HTML_DIR=${HTML_DIR}"
-#   COMMAND ${COPY_DIFF} ${TMP_PDF_FILE} ${PDF_FILE} 
-#   COMMAND ${COPY_DIR} ${TMP_HTML_DIR} ${HTML_DIR} 
-#   DEPENDS doc
-# )
+ # make doc and copy at doc folder
+ add_custom_target( deploy_doc echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
+   COMMAND echo "PDF_FILE=${PDF_FILE}"
+   COMMAND echo "HTML_DIR=${HTML_DIR}"
+   COMMAND ${COPY_DIFF} ${TMP_PDF_FILE} ${PDF_FILE} 
+   COMMAND ${COPY_DIR} ${TMP_HTML_DIR} ${HTML_DIR} 
+   DEPENDS doc
+   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+ )
 	
+elseif(DOXYGEN_FOUND)
+   message(WARNING "Doxygen not installed; skipped documentation")
 endif(DOXYGEN_FOUND)

@@ -2,7 +2,7 @@
 
 Infrastructure to load small tasks and manage them 
 
-![Summary](images/summary.png)
+![Summary](image/summary.png)
 <!-- java -jar /opt/plantuml/plantuml.jar README.md -o images -->
 <!--
 @startuml summary.png
