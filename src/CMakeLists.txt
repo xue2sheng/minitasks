@@ -2,23 +2,7 @@
 # generate version.h from template version.h.in 
 ################################################
 
-# Add GIT info
-execute_process(
-  COMMAND git log -1 --format=%H
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_COMMIT_HASH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# Add GP 
-execute_process(
-  COMMAND git log -1 --format=%H
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_COMMIT_HASH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-string(STRIP "${GIT_COMMIT_HASH}" VERSION_INFO)
-
-# Create .hpp version file
+# Create .hpp version file with VERSION_INFO 
 set(VERSION_HPP_IN "${CMAKE_SOURCE_DIR}/src/version.hpp.in")
 set(VERSION_HPP_OUT "${CMAKE_SOURCE_DIR}/src/version.hpp")
 configure_file(${VERSION_HPP_IN} ${VERSION_HPP_OUT})

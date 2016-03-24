@@ -37,3 +37,29 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
 else ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   message(FATAL_ERROR "Not supported") 
 endif()
+
+# Git info
+  
+# Add GIT project name  
+execute_process(
+  COMMAND git config --local remote.origin.url    
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_PROJECT_NAME  
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Add GIT branch
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD    
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Add Git hashcode  
+execute_process(
+  COMMAND git log -1 --format=%H
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+string(STRIP "${GIT_PROJECT_NAME} ${GIT_BRANCH} ${GIT_COMMIT_HASH}" VERSION_INFO)
+message(STATUS "VERSION_INFO: ${VERSION_INFO}")   

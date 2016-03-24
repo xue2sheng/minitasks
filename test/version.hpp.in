@@ -1,6 +1,6 @@
 #ifndef VERSION_HPP
 #define VERSION_HPP
 
-static const char* VERSION_INFO = "@GIT_COMMIT_HASH@";
+static const char* VERSION_INFO = "@VERSION_INFO@";
 
 #endif // VERSION_HPP
