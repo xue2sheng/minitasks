@@ -2,6 +2,14 @@
 
 Some extra tools will be used to make our lives easier.
 
+## Doxygen
+
+Generate documentation from source code is easier using [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html). The targets chosen were *HTML* and *PDF* from *Latex* templates.
+
+## Latex
+
+A document preparation system as [Doxygen](https://www.latex-project.org) depends heavily on the platform to be installed. Get ready to hack your system in order to present an uniform commandline access for this project.
+   
 ## PlantUML
 
 In order to generate **Graphs** from **UML** pure text inputs, [PlantUML](http://plantuml.com) will be used. Have a look to its [PDF documentation](PlantUML_Language_Reference_Guide.pdf) for further details.

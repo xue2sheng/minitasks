@@ -15,7 +15,7 @@ rectangle "Launch\ndifferent tasks" {
 
 ## Requirements
 
-This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7xx), latest **boost** libraries (>=1.58) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
+This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7.0), latest **boost** libraries (>=1.58) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
 
        rm -rf build && mkdir build && cd build && cmake ..
        
