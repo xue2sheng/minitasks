@@ -16,58 +16,28 @@ if (DOXYGEN_VERSION VERSION_LESS 1.8.11)
      message(FATAL_ERROR "Doxygen version must be at least 1.8.11!")
 endif()
 
-#########################
-# Add GIT info
-execute_process(
-  COMMAND git log -1 --format=%H 
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} 
-  OUTPUT_VARIABLE GIT_COMMIT_HASH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-######################## 
-set( WILDCARD "pepe" )
-set( DOXYFILE_PROJECT_NAME "${CMAKE_PROJECT_NAME}")
-set( DOXYFILE_PROJECT_NUMBER "999")
-set( CMAKE_GIT_COMMIT_HASH "${GIT_COMMIT_HASH}")
-set( DOXYFILE_PROJECT_BRIEF "${WILDCARD}")
-set( DOXYFILE_INPUT00 "${WILDCARD}")
-set( DOXYFILE_INPUT01 "${WILDCARD}")
-set( DOXYFILE_INPUT02 "${WILDCARD}")
-set( DOXYFILE_INPUT03 "${WILDCARD}")
-set( DOXYFILE_INPUT04 "${WILDCARD}")
-set( DOXYFILE_INPUT05 "${WILDCARD}")
-set( DOXYFILE_INPUT06 "${WILDCARD}")
-set( DOXYFILE_INPUT07 "${WILDCARD}")
-set( DOXYFILE_INPUT08 "${WILDCARD}")
-set( DOXYFILE_INPUT09 "${WILDCARD}")
-set( DOXYFILE_INPUT10 "${WILDCARD}")
-set( DOXYFILE_INPUT11 "${WILDCARD}")
-set( DOXYFILE_INPUT12 "${WILDCARD}")
-set( DOXYFILE_INPUT13 "${WILDCARD}")
-set( DOXYFILE_INPUT14 "${WILDCARD}")
-set( DOXYFILE_INPUT15 "${WILDCARD}")
-set( DOXYFILE_INPUT16 "${WILDCARD}")
-set( DOXYFILE_INPUT17 "${WILDCARD}")
-set( DOXYFILE_INPUT18 "${WILDCARD}")
-set( DOXYFILE_INPUT19 "${WILDCARD}")
-set( LOCAL_SOURCE_DIR "${CMAKE_SOURCE_DIR}")
-set( DOXYFILE_INPUT_FILTER "${CMAKE_BINARY_DIR}/md_filter.awk")
-set( DOXYFILE_FILTER_PATTERNS "${WILDCARD}")
-set( CMAKE_HEADER_OUT "${CMAKE_BINARY_DIR}/header.tex")
-###################################
-set( GIT_SYSTEM "${WILDCARD}")
-set( GIT_MODULES_STATUS "${WILDCARD}")
-set( CMAKE_GIT_DETAILS "${WILDCARD}")
-set( DOXYFILE_PROJECT_NUMBER_CORE "888")
-set( CMAKE_GIT_DETAILS_CORE "${WILDCARD}")
-set( DOXYFILE_PROJECT_NUMBER_BASE "777")
-set( CMAKE_GIT_DETAILS_BASE "${WILDCARD}")
-set( DOXYFILE_PROJECT_NUMBER_UI "666")
-set( CMAKE_GIT_DETAILS_UI "${WILDCARD}")
-set( DOXYFILE_PROJECT_NUMBER_PERSIST "555")
-set( CMAKE_GIT_DETAILS_PERSIST "${WILDCARD}")
+ site_name(CMAKE_HOSTNAME)
+ set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
 
-#########################
+ # On *nix systems, it's easier to use an external awk script
+ # This way, we're not limited on the starting words of our sections (we can use random values for references)
+
+ # Besides, it's possible to target only specific Markdown files
+ # So it'll be easier to 'target' other entries, i.e. java files, in the future
+
+ set(DOXYFILE_INPUT_FILTER "INPUT_FILTER =")
+ set(DOXYFILE_FILTER_PATTERNS "FILTER_PATTERNS = \"*.md=\\\"awk -f ${MD_FILTER_OUT}\\\"\" ")
+
+######################## 
+set( DOXYFILE_INPUT00 "${CMAKE_SOURCE_DIR}")
+set( DOXYFILE_INPUT01 "${CMAKE_SOURCE_DIR}/src")
+set( DOXYFILE_INPUT02 "${CMAKE_SOURCE_DIR}/test")
+set( DOXYFILE_INPUT03 "${CMAKE_SOURCE_DIR}/doc")
+set( DOXYFILE_INPUT04 "${CMAKE_SOURCE_DIR}/tools")
+set( DOXYFILE_INPUT05 "${CMAKE_SOURCE_DIR}/image")
+set( DOXYFILE_INPUT_FILTER "${CMAKE_BINARY_DIR}/md_filter.awk")
+set( CMAKE_HEADER_OUT "${CMAKE_BINARY_DIR}/header.tex")
+
 ######################### 
 # Create templates for documentation files
 set(DOXYFILE_IN "${CMAKE_SOURCE_DIR}/doc/Doxyfile.in")

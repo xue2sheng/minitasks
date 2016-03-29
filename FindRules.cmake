@@ -8,6 +8,11 @@
 set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
 set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
 
+## default PDF header
+set( DOXYFILE_PROJECT_NAME "Minitasks")
+set( DOXYFILE_PROJECT_NUMBER "0.0.1")
+set( DOXYFILE_PROJECT_BRIEF "Infrastructure to load small tasks and manage them")
+
 ############################
 # Boost libraries required #
 ############################

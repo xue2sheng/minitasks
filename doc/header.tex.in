@@ -128,31 +128,13 @@
 {\large $projectnumber}\\
 \end{center}
 \end{titlepage}
-\newpage
+%\newpage
 
-\thispagestyle{empty}
+%\thispagestyle{empty}
 \par\vspace*{\fill}
 \begin{flushright}%
 {\normalsize $datetime on @GIT_SYSTEM@ }\\
 \vspace*{0.4cm}
-\end{flushright}
-{\footnotesize @GIT_MODULES_STATUS@ }\\
-\begin{flushright}%
-\vspace*{0.4cm}
-{\normalsize VERSION @DOXYFILE_PROJECT_NUMBER@ Git: }\\ 
-{\footnotesize @CMAKE_GIT_DETAILS@ }\\
-\vspace*{0.4cm}
-{\normalsize VERSION CORE @DOXYFILE_PROJECT_NUMBER_CORE@ Git: }\\
-{\footnotesize @CMAKE_GIT_DETAILS_CORE@ }\\
-\vspace*{0.3cm}
-{\normalsize VERSION BASE @DOXYFILE_PROJECT_NUMBER_BASE@ Git: }\\
-{\footnotesize @CMAKE_GIT_DETAILS_BASE@ }\\
-\vspace*{0.3cm}
-{\normalsize VERSION UI @DOXYFILE_PROJECT_NUMBER_UI@ Git: }\\
-{\footnotesize @CMAKE_GIT_DETAILS_UI@ }\\
-\vspace*{0.3cm}
-{\normalsize VERSION PERSIST @DOXYFILE_PROJECT_NUMBER_PERSIST@ Git: }\\
-{\footnotesize @CMAKE_GIT_DETAILS_PERSIST@ }\\
 \end{flushright}
 
 \clearemptydoublepage
