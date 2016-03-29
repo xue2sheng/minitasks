@@ -1,17 +1,36 @@
 # Include version restriction on compilers and libraries
-   
-# Boost libraries required
-set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")
-set(Boost_USE_STATIC_RUNTIME ON CACHE BOOL "use static runtime from Boost")
-set(Boost_USE_MULTITHREADED ON)
+
+################################
+#### Optional Documentation ####   
+################################
+
+## default deployment targets 
+set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
+set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
+
+############################
+# Boost libraries required #
+############################
+
 find_package( Boost )
 if( Boost_FOUND )
-  message(STATUS "Boost LIBRARIES: ${Boost_LIBRARIES}")
+
+  if (Boost_VERSION VERSION_LESS 1.58.0)
+     message(FATAL_ERROR "Boost version must be at least 1.58.0!")
+  endif()
+
+  set(Boost_USE_STATIC_LIBS ON CACHE BOOL "use static libraries from Boost")
+  set(Boost_USE_STATIC_RUNTIME ON CACHE BOOL "use static runtime from Boost")
+  set(Boost_USE_MULTITHREADED ON)
+
 else()
   message(FATAL_ERROR "Boost libraries requied")
 endif()
 
-# Different compiler support
+##############################
+# Different compiler support #
+##############################
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.2)
      message(FATAL_ERROR "GCC version must be at least 5.2!")
@@ -38,7 +57,9 @@ else ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   message(FATAL_ERROR "Not supported") 
 endif()
 
-# Git info
+############
+# Git info #
+############
   
 # Add GIT project name  
 execute_process(

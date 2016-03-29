@@ -12,6 +12,10 @@ set(ENV_CMD ${CMAKE_COMMAND} -E env ${EXTRA_ARG})
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
 
+if (DOXYGEN_VERSION VERSION_LESS 1.8.11)
+     message(FATAL_ERROR "Doxygen version must be at least 1.8.11!")
+endif()
+
 #########################
 # Add GIT info
 execute_process(
@@ -79,8 +83,6 @@ configure_file(${MD_FILTER_AWK_IN} ${MD_FILTER_AWK_OUT})
  # TARGET
  set(TMP_PDF_FILE ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdf)
  set(TMP_HTML_DIR ${CMAKE_BINARY_DIR}/html)
- set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
- set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
 
  # make image
  add_custom_target( image ${INVOKE_CMAKE_SCRIPT} ${PROJECT_SOURCE_DIR}/image/CMakeLists.txt
