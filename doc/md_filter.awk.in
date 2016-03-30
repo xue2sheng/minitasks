@@ -11,7 +11,9 @@
    split(b[2],c,".png"); m=split(c[1],d,"/"); n=split(d[m],e,"("); photo=e[n];
 
    # latex & html commands
-   print "\\image latex " photo ".png " options " \\image html " photo ".png"; 
+   #print "\\image latex " photo ".png " options " \\image html " photo ".png"; 
+   print "\\image latex " photo ".png " options;
+   print "\\image html " photo ".png"; 
 
    # avoid duplicate images
    next
