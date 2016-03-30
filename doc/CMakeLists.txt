@@ -13,8 +13,10 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
 
 if (DOXYGEN_VERSION VERSION_LESS 1.8.11)
-     message(FATAL_ERROR "Doxygen version must be at least 1.8.11!")
-endif()
+
+     message(WARNING "Doxygen version must be at least 1.8.11 so skipped documentation")
+
+else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
 
  site_name(CMAKE_HOSTNAME)
  set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
@@ -78,6 +80,8 @@ configure_file(${MD_FILTER_AWK_IN} ${MD_FILTER_AWK_OUT})
    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
  )
 	
+  endif (DOXYGEN_VERSION VERSION_LESS 1.8.11)
+
 elseif(DOXYGEN_FOUND)
    message(WARNING "Doxygen not installed; skipped documentation")
 endif(DOXYGEN_FOUND)
