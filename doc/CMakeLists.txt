@@ -26,10 +26,6 @@ else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
  set(MD_FILTER_AWK_IN "${CMAKE_SOURCE_DIR}/doc/md_filter.awk.in")
  set(MD_FILTER_AWK_OUT "${CMAKE_BINARY_DIR}/md_filter.awk")
 
- # extra environment info
- site_name(CMAKE_HOSTNAME)
- set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
-
  # list of folder to be processed
  set( DOXYFILE_INPUT00 "${CMAKE_SOURCE_DIR}")
  set( DOXYFILE_INPUT01 "${CMAKE_SOURCE_DIR}/src")
@@ -71,7 +67,7 @@ else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
  )
 
  # make doc and copy at doc folder
- add_custom_target( doc_and_deploy echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
+ add_custom_target( install_doc echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
    COMMAND echo "PDF_FILE=${PDF_FILE}"
    COMMAND echo "HTML_DIR=${HTML_DIR}"
    COMMAND ${COPY_DIFF} ${TMP_PDF_FILE} ${PDF_FILE} 
@@ -79,8 +75,8 @@ else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
    DEPENDS doc
    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
  )
-	
-  endif (DOXYGEN_VERSION VERSION_LESS 1.8.11)
+
+ endif (DOXYGEN_VERSION VERSION_LESS 1.8.11)
 
 elseif(DOXYGEN_FOUND)
    message(WARNING "Doxygen not installed; skipped documentation")
