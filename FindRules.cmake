@@ -4,13 +4,30 @@
 #### Optional Documentation ####   
 ################################
 
+## default Document Number
+if(NOT DEFINED DOCUMENT_NUMBER)
+  set(DOCUMENT_NUMBER "0.0.1")
+endif()
+if(DOCUMENT_NUMBER STREQUAL "")
+  set(DOCUMENT_NUMBER "0.0.1")
+endif()
+
 ## default deployment targets 
-set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
-set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
+if(NOT DEFINED PDF_FILE)
+ set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
+endif()
+if(PDF_FILE STREQUAL "")
+ set(PDF_FILE ${CMAKE_SOURCE_DIR}/doc/${CMAKE_PROJECT_NAME}.pdf)
+endif()
+if(NOT DEFINED HTML_DIR)
+  set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
+endif()
+if(HTML_DIR STREQUAL "")
+  set(HTML_DIR ${CMAKE_SOURCE_DIR}/doc/html)
+endif()
 
 ## default PDF header
 set( DOXYFILE_PROJECT_NAME "Minitasks")
-set( DOXYFILE_PROJECT_NUMBER "0.0.1")
 set( DOXYFILE_PROJECT_BRIEF "Infrastructure to load small tasks and manage them")
 
 ############################
@@ -95,4 +112,6 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 string(STRIP "${GIT_PROJECT_NAME} ${GIT_BRANCH} ${GIT_COMMIT_HASH}" VERSION_INFO)
+string(STRIP "${DOCUMENT_NUMBER}_${GIT_COMMIT_HASH}" DOXYFILE_PROJECT_NUMBER)
 message(STATUS "VERSION_INFO: ${VERSION_INFO}")   
+message(STATUS "DOXYFILE_PROJECT_NUMBER: ${DOXYFILE_PROJECT_NUMBER}")   

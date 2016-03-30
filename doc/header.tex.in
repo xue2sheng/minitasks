@@ -1,6 +1,6 @@
 % Latex header for doxygen 1.8.9.1
-%\documentclass[twoside]{book}
-\documentclass[oneside]{book}
+\documentclass[twoside]{book}
+%\documentclass[oneside]{book}
 
 % Packages required by doxygen
 \usepackage{fixltx2e}
@@ -73,8 +73,8 @@
 \fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
 \fancyfoot[LE]{\fancyplain{}{}}
 \fancyfoot[CE]{\fancyplain{}{}}
-\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize $datetime  $projectnumber }}
-\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize $projectnumber  $datetime}}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}} \textbf{@DOXYFILE_PROJECT_NAME@} & \textbf{$projectnumber} \end{tabular*} }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}} \textbf{$projectnumber} & \textbf{@DOXYFILE_PROJECT_NAME@} \end{tabular*} }}
 \fancyfoot[CO]{\fancyplain{}{}}
 \fancyfoot[RO]{\fancyplain{}{}}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -133,8 +133,16 @@
 %\thispagestyle{empty}
 \par\vspace*{\fill}
 \begin{flushright}%
-{\normalsize $datetime on @GIT_SYSTEM@ }\\
-\vspace*{0.4cm}
+{\normalsize $datetime }\\
+\vspace*{0.1cm}
+{\normalsize @GIT_SYSTEM@ }\\
+\vspace*{1cm}
+{\normalsize @GIT_COMMIT_HASH_LONG@ }\\
+\vspace*{0.1cm}
+{\normalsize @GIT_BRANCH@ }\\
+\vspace*{0.1cm}
+{\normalsize @GIT_PROJECT_NAME@ }\\
+\vspace*{0.1cm}
 \end{flushright}
 
 \clearemptydoublepage
