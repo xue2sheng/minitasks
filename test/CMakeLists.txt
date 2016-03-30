@@ -18,3 +18,6 @@ include_directories( ${Boost_INCLUDE_DIRS} )
 add_executable(unitTest ${SRC} ${MARKDOWN})
 target_link_libraries(unitTest ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} )
 add_test(testMain unitTest)
+
+# install #
+install(TARGETS unitTest RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX} COMPONENT "test")

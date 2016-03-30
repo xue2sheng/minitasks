@@ -31,7 +31,7 @@ If you happen to compile a specific version of **boost** libraries for a *clang*
 
 Something similar if you work on *OSX* (provided Homebrew installed boost libraries at /usr/local/Cellar/boost/1.60.0_1). In this case no need to worry about *llvm/libc++*; on **Apple** platfomrs is the stardard choice (it seems that Google Android & Windows are following that path as well):
 
-       rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .. 
+       bash -c "rm -rf build && mkdir build && cd build && cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .."
 
 **Note:** Default flags are defined to statically link as much as possible depending on different systems in order not to require latest development compilers/libraries on deployment machines:
 

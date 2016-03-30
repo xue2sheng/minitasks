@@ -1,5 +1,17 @@
 # Include version restriction on compilers and libraries
 
+#########################
+### Install directory ###
+#########################
+
+## default target
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+  set(DOCUMENT_NUMBER "/opt/${CMAKE_PROJECT_NAME}")
+endif()
+if(CMAKE_INSTALL_PREFIX STREQUAL "")
+  set(DOCUMENT_NUMBER "/opt/${CMAKE_PROJECT_NAME}")
+endif()
+
 ################################
 #### Optional Documentation ####   
 ################################

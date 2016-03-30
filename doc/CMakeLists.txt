@@ -71,7 +71,7 @@ else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
  )
 
  # make doc and copy at doc folder
- add_custom_target( deploy_doc echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
+ add_custom_target( doc_and_deploy echo "TMP_PDF_FILE=${TMP_PDF_FILE}" 
    COMMAND echo "PDF_FILE=${PDF_FILE}"
    COMMAND echo "HTML_DIR=${HTML_DIR}"
    COMMAND ${COPY_DIFF} ${TMP_PDF_FILE} ${PDF_FILE} 
