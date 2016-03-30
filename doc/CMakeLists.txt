@@ -18,39 +18,39 @@ if (DOXYGEN_VERSION VERSION_LESS 1.8.11)
 
 else (DOXYGEN_VERSION VERSION_LESS 1.8.11)
 
+ # Templates for documentation files
+ set(DOXYFILE_IN "${CMAKE_SOURCE_DIR}/doc/Doxyfile.in")
+ set(DOXYFILE_OUT "${CMAKE_BINARY_DIR}/Doxyfile")
+ set(HEADER_TEX_IN "${CMAKE_SOURCE_DIR}/doc/header.tex.in")
+ set(HEADER_TEX_OUT "${CMAKE_BINARY_DIR}/header.tex")
+ set(MD_FILTER_AWK_IN "${CMAKE_SOURCE_DIR}/doc/md_filter.awk.in")
+ set(MD_FILTER_AWK_OUT "${CMAKE_BINARY_DIR}/md_filter.awk")
+
+ # extra environment info
  site_name(CMAKE_HOSTNAME)
  set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
 
+ # list of folder to be processed
+ set( DOXYFILE_INPUT00 "${CMAKE_SOURCE_DIR}")
+ set( DOXYFILE_INPUT01 "${CMAKE_SOURCE_DIR}/src")
+ set( DOXYFILE_INPUT02 "${CMAKE_SOURCE_DIR}/test")
+ set( DOXYFILE_INPUT03 "${CMAKE_SOURCE_DIR}/doc")
+ set( DOXYFILE_INPUT04 "${CMAKE_SOURCE_DIR}/tools")
+ set( DOXYFILE_INPUT05 "${CMAKE_SOURCE_DIR}/image")
+ set( CMAKE_HEADER_OUT "${CMAKE_BINARY_DIR}/header.tex")
+
  # On *nix systems, it's easier to use an external awk script
  # This way, we're not limited on the starting words of our sections (we can use random values for references)
-
  # Besides, it's possible to target only specific Markdown files
  # So it'll be easier to 'target' other entries, i.e. java files, in the future
+ set(DOXYFILE_IMAGE_PATH "IMAGE_PATH = ${CMAKE_SOURCE_DIR}/image")
+ set(DOXYFILE_INPUT_FILTER "INPUT_FILTER =") # future use on Windows where "awk" is not a default option
+ set(DOXYFILE_FILTER_PATTERNS "FILTER_PATTERNS = \"*.md=\\\"awk -f ${MD_FILTER_AWK_OUT}\\\"\" ")
 
- set(DOXYFILE_INPUT_FILTER "INPUT_FILTER =")
- set(DOXYFILE_FILTER_PATTERNS "FILTER_PATTERNS = \"*.md=\\\"awk -f ${MD_FILTER_OUT}\\\"\" ")
-
-######################## 
-set( DOXYFILE_INPUT00 "${CMAKE_SOURCE_DIR}")
-set( DOXYFILE_INPUT01 "${CMAKE_SOURCE_DIR}/src")
-set( DOXYFILE_INPUT02 "${CMAKE_SOURCE_DIR}/test")
-set( DOXYFILE_INPUT03 "${CMAKE_SOURCE_DIR}/doc")
-set( DOXYFILE_INPUT04 "${CMAKE_SOURCE_DIR}/tools")
-set( DOXYFILE_INPUT05 "${CMAKE_SOURCE_DIR}/image")
-set( DOXYFILE_INPUT_FILTER "${CMAKE_BINARY_DIR}/md_filter.awk")
-set( CMAKE_HEADER_OUT "${CMAKE_BINARY_DIR}/header.tex")
-
-######################### 
-# Create templates for documentation files
-set(DOXYFILE_IN "${CMAKE_SOURCE_DIR}/doc/Doxyfile.in")
-set(DOXYFILE_OUT "${CMAKE_BINARY_DIR}/Doxyfile")
-configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT})
-set(HEADER_TEX_IN "${CMAKE_SOURCE_DIR}/doc/header.tex.in")
-set(HEADER_TEX_OUT "${CMAKE_BINARY_DIR}/header.tex")
-configure_file(${HEADER_TEX_IN} ${HEADER_TEX_OUT})
-set(MD_FILTER_AWK_IN "${CMAKE_SOURCE_DIR}/doc/md_filter.awk.in")
-set(MD_FILTER_AWK_OUT "${CMAKE_BINARY_DIR}/md_filter.awk")
-configure_file(${MD_FILTER_AWK_IN} ${MD_FILTER_AWK_OUT})
+ # Create templates
+ configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT})
+ configure_file(${HEADER_TEX_IN} ${HEADER_TEX_OUT})
+ configure_file(${MD_FILTER_AWK_IN} ${MD_FILTER_AWK_OUT})
 
  # TARGET
  set(TMP_PDF_FILE ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdf)
