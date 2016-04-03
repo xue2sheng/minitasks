@@ -1,5 +1,12 @@
 cmake_minimum_required (VERSION 3.5)
-project (minitasks)
+
+# if we want just generate documentation (doxygen & latex required) 
+# then there is not need to have a proper C++ compiler & related utilities (boost, ...)
+if(JUST_DOCUMENTATION)
+  project (minitasks NONE)
+else()
+  project (minitasks CXX)
+endif()
 
 # Just to check it out compilers/libraries
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/" ${CMAKE_MODULE_PATH})

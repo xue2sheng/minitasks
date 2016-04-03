@@ -16,6 +16,19 @@ endif()
 #### Optional Documentation ####   
 ################################
 
+## by default not pure documentation project
+if(NOT DEFINED JUST_DOCUMENTATION)
+  set(BUILD_CODE True)
+elseif()
+  set(BUILD_CODE False)
+endif()
+
+## PDF generation requires "make"
+if(NOT DEFINED CMAKE_BUILD_TOOL) 
+  # default value jus in case
+  set(CMAKE_BUILD_TOOL "/usr/bin/make")
+endif()
+
 ## default Document Number
 if(NOT DEFINED DOCUMENT_NUMBER)
   set(DOCUMENT_NUMBER "0.0.1")
@@ -41,6 +54,57 @@ endif()
 ## default PDF header
 set( DOXYFILE_PROJECT_NAME "Minitasks")
 set( DOXYFILE_PROJECT_BRIEF "Infrastructure to load small tasks and manage them")
+
+############
+# Git info #
+############
+  
+# Add GIT project name  
+execute_process(
+  COMMAND git config --local remote.origin.url    
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_PROJECT_NAME  
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Add GIT branch
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD    
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Add Git hashcode LONG
+execute_process(
+  COMMAND git log -1 --format=%H
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH_LONG
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Add Git hashcode SHORT
+execute_process(
+  COMMAND git log -1 --format=%h
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# extra environment info
+site_name(CMAKE_HOSTNAME)
+set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
+execute_process(COMMAND "date"  OUTPUT_VARIABLE DATETIME OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+string(STRIP "${GIT_PROJECT_NAME} ${GIT_BRANCH} ${GIT_COMMIT_HASH} [${DATETIME}] ${GIT_SYSTEM}" VERSION_INFO)
+string(STRIP "${DOCUMENT_NUMBER}_${GIT_COMMIT_HASH}" DOXYFILE_PROJECT_NUMBER)
+
+## some info
+message(STATUS "VERSION_INFO: ${VERSION_INFO}")   
+message(STATUS "DOXYFILE_PROJECT_NUMBER: ${DOXYFILE_PROJECT_NUMBER}")  
+ 
+###############################################################
+######## If we want more than just documentation ##############
+###############################################################
+
+if(BUILD_CODE)
 
 ############################
 # Boost libraries required #
@@ -91,47 +155,7 @@ else ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   message(FATAL_ERROR "Not supported") 
 endif()
 
-############
-# Git info #
-############
-  
-# Add GIT project name  
-execute_process(
-  COMMAND git config --local remote.origin.url    
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_PROJECT_NAME  
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# Add GIT branch
-execute_process(
-  COMMAND git rev-parse --abbrev-ref HEAD    
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_BRANCH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# Add Git hashcode LONG
-execute_process(
-  COMMAND git log -1 --format=%H
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_COMMIT_HASH_LONG
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# Add Git hashcode SHORT
-execute_process(
-  COMMAND git log -1 --format=%h
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_COMMIT_HASH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+##########
 
-# extra environment info
-site_name(CMAKE_HOSTNAME)
-set(GIT_SYSTEM "$ENV{USER}@${CMAKE_HOSTNAME}")
-execute_process(COMMAND "date"  OUTPUT_VARIABLE DATETIME OUTPUT_STRIP_TRAILING_WHITESPACE)
+endif(BUILD_CODE)
 
-string(STRIP "${GIT_PROJECT_NAME} ${GIT_BRANCH} ${GIT_COMMIT_HASH} [${DATETIME}] ${GIT_SYSTEM}" VERSION_INFO)
-string(STRIP "${DOCUMENT_NUMBER}_${GIT_COMMIT_HASH}" DOXYFILE_PROJECT_NUMBER)
-
-## some info
-message(STATUS "VERSION_INFO: ${VERSION_INFO}")   
-message(STATUS "DOXYFILE_PROJECT_NUMBER: ${DOXYFILE_PROJECT_NUMBER}")   

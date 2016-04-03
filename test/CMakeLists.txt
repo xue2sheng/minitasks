@@ -11,13 +11,18 @@ configure_file(${VERSION_HPP_IN} ${VERSION_HPP_OUT})
 # Compile test cases
 ####################
 
-file(GLOB MARKDOWN *.md)
-file(GLOB SRC *.cpp *.hpp)
-find_package( Boost REQUIRED COMPONENTS unit_test_framework )
-include_directories( ${Boost_INCLUDE_DIRS} )
-add_executable(unitTest ${SRC} ${MARKDOWN})
-target_link_libraries(unitTest ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} )
-add_test(testMain unitTest)
+if(BUILD_CODE)
 
-# install #
-install(TARGETS unitTest RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX} COMPONENT "test")
+ file(GLOB MARKDOWN *.md)
+ file(GLOB SRC *.cpp *.hpp)
+ find_package( Boost REQUIRED COMPONENTS unit_test_framework )
+ include_directories( ${Boost_INCLUDE_DIRS} )
+ add_executable(unitTest ${SRC} ${MARKDOWN})
+ target_link_libraries(unitTest ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} )
+ add_test(testMain unitTest)
+
+ # install #
+ install(TARGETS unitTest RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX} COMPONENT "test")
+
+endif(BUILD_CODE)
+
