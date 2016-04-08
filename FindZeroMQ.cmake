@@ -18,42 +18,42 @@
 # Variables used by this module, they can change the default behaviour and need
 # to be set before calling find_package:
 #
-#  ZeroMQ_ROOT_DIR  Set this variable to the root installation of
+#  ZeroMQ_ROOT  Set this variable to the root installation of
 #                            ZeroMQ if the module has problems finding
 #                            the proper installation path.
 #
 # Variables defined by this module:
 #
-#  ZEROMQ_FOUND              System has ZeroMQ libs/headers
+#  ZeroMQ_FOUND              System has ZeroMQ libs/headers
 #  ZeroMQ_LIBRARIES          The ZeroMQ libraries
-#  ZeroMQ_INCLUDE_DIR        The location of ZeroMQ headers
+#  ZeroMQ_INCLUDE        The location of ZeroMQ headers
 
-find_path(ZeroMQ_ROOT_DIR
+find_path(ZeroMQ_ROOT
   NAMES include/zmq.h
   )
 
 find_library(ZeroMQ_LIBRARY
     NAMES libzmq.a zmq libzmq
-    HINTS ${ZeroMQ_ROOT_DIR}/lib
+    HINTS ${ZeroMQ_ROOT}/lib
     )
 
-find_path(ZeroMQ_INCLUDE_DIR
+find_path(ZeroMQ_INCLUDE
   NAMES zmq.h
-  HINTS ${ZeroMQ_ROOT_DIR}/include
+  HINTS ${ZeroMQ_ROOT}/include
   )
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ZeroMQ DEFAULT_MSG
   ZeroMQ_LIBRARY
-  ZeroMQ_INCLUDE_DIR
+  ZeroMQ_INCLUDE
   )
 
-set(ZeroMQ_INCLUDE_DIRS ${ZeroMQ_INCLUDE_DIR})
+set(ZeroMQ_INCLUDE_DIRS ${ZeroMQ_INCLUDE})
 set(ZeroMQ_LIBRARIES ${ZeroMQ_LIBRARY})
 
 mark_as_advanced(
-  ZeroMQ_ROOT_DIR
+  ZeroMQ_ROOT
   ZeroMQ_LIBRARY
-  ZeroMQ_INCLUDE_DIR
+  ZeroMQ_INCLUDE
   )
 

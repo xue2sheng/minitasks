@@ -125,6 +125,27 @@ else()
   message(FATAL_ERROR "Boost libraries requied")
 endif()
 
+#############################
+# ZeroMQ libraries required #
+#############################
+
+find_package( ZeroMQ )
+if( ZeroMQ_FOUND )
+  find_package( CZMQ )
+  if( CZMQ_FOUND )
+     find_package( CZMQPP )
+     if( CZMQPP_FOUND )
+        message(STATUS "ZeroMQ, CZMQ & CZMQPP libraries found")
+     else( CZMQPP_FOUND )
+        message(FATAL_ERROR "CZMQPP libraries requied")
+     endif( CZMQPP_FOUND )
+  else( CZMQ_FOUND )
+    message(FATAL_ERROR "CZMQ libraries requied")
+  endif( CZMQ_FOUND )
+else( ZeroMQ_FOUND )
+  message(FATAL_ERROR "ZeroMQ libraries requied")
+endif( ZeroMQ_FOUND )
+
 ##############################
 # Different compiler support #
 ##############################

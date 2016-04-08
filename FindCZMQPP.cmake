@@ -18,7 +18,7 @@
 # Variables used by this module, they can change the default behaviour and need
 # to be set before calling find_package:
 #
-#  CZMQPP_ROOT_DIR  Set this variable to the root installation of
+#  CZMQPP_ROOT  Set this variable to the root installation of
 #                            CZMQPP if the module has problems finding
 #                            the proper installation path.
 #
@@ -26,34 +26,34 @@
 #
 #  CZMQPP_FOUND              System has CZMQPP libs/headers
 #  CZMQPP_LIBRARIES          The CZMQPP libraries
-#  CZMQPP_INCLUDE_DIR        The location of CZMQPP headers
+#  CZMQPP_INCLUDE        The location of CZMQPP headers
 
-find_path(CZMQPP_ROOT_DIR
-  NAMES include/czmq++/czmqpp.hpp
+find_path(CZMQPP_ROOT
+  NAMES lib/libczmq++.so 
   )
 
 find_library(CZMQPP_LIBRARY
     NAMES libczmq++.a  libczmq++.la libczmq++.so 
-    HINTS ${CZMQ_ROOT_DIR}/lib
+    HINTS ${CZMQPP_ROOT}/lib
     )
 
-find_path(CZMQPP_INCLUDE_DIR
-  NAMES czmqpp.hpp
-  HINTS ${CZMQ_ROOT_DIR}/include
+find_path(CZMQPP_INCLUDE
+  NAMES czmq++/czmqpp.hpp
+  HINTS ${CZMQPP_ROOT}/include
   )
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CZMQPP DEFAULT_MSG
   CZMQPP_LIBRARY
-  CZMQPP_INCLUDE_DIR
+  CZMQPP_INCLUDE
   )
 
-set(CZMQPP_INCLUDE_DIRS ${CZMQPP_INCLUDE_DIR})
+set(CZMQPP_INCLUDE_DIRS ${CZMQPP_INCLUDE})
 set(CZMQPP_LIBRARIES ${CZMQPP_LIBRARY})
 
 mark_as_advanced(
-  CZMQPP_ROOT_DIR
+  CZMQPP_ROOT
   CZMQPP_LIBRARY
-  CZMQPP_INCLUDE_DIR
+  CZMQPP_INCLUDE
   )
 
