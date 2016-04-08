@@ -3,6 +3,7 @@
 #include <dlfcn.h>
 
 #include "boost/program_options.hpp"
+#include "eidheim/server_http.hpp"
 #include "main.hpp"
 #include "version.hpp"
 

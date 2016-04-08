@@ -16,10 +16,10 @@ if(BUILD_CODE)
  file(GLOB MARKDOWN *.md)
  file(GLOB SRC *.cpp *.hpp)
  add_subdirectory(basic)
- find_package( Boost REQUIRED COMPONENTS program_options )
+ find_package( Boost REQUIRED COMPONENTS program_options regex system thread coroutine context filesystem date_time )
  include_directories( ${Boost_INCLUDE_DIRS} )
  add_executable(${CMAKE_PROJECT_NAME}  ${SRC} ${MARKDOWN})
- target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_PROGRAM_OPTIONS_LIBRARY} dl )
+ target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} dl )
 
  # install  
  install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX} COMPONENT binary)

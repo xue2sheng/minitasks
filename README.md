@@ -17,7 +17,9 @@ rectangle "Launch\ndifferent tasks" {
 
 *Doxygen/Latex/Graphviz/Plantuml* tools are needed to generate documentation. If you are not interested in that step, just do not execute **make doc** or **make image** optional targets.
 
-This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7.0), latest **boost** libraries (>=1.58), latest **ZeroMQ** (with wrappers *czmq* & *czmqpp*) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
+This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7.0), latest **boost** libraries (>=1.58), latest **ZeroMQ** (with wrappers *czmq* & *czmqpp*) and expected as well a modern *cmake* (>=3.5). Special mention to superb **Ole Christian Eidheim**'s [libraries](eidheim) based on **boost::asio** at [Simple-Web-Server](https://github.com/eidheim/Simple-Web-Server).
+
+Hence, if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
 
        rm -rf build && mkdir build && cd build && cmake ..
        
