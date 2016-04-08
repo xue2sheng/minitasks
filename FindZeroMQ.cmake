@@ -33,7 +33,7 @@ find_path(ZeroMQ_ROOT
   )
 
 find_library(ZeroMQ_LIBRARY
-    NAMES libzmq.a zmq libzmq
+    NAMES libzmq-static.a zmq libzmq
     HINTS ${ZeroMQ_ROOT}/lib
     )
 
