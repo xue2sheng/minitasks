@@ -17,7 +17,7 @@ rectangle "Launch\ndifferent tasks" {
 
 *Doxygen/Latex/Graphviz/Plantuml* tools are needed to generate documentation. If you are not interested in that step, just do not execute **make doc** or **make image** optional targets.
 
-This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7.0), latest **boost** libraries (>=1.58) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
+This project is based on **C++14** standard (g++ >= 5.2, clang++ >= 3.8, apple clang++ >= 7.0), latest **boost** libraries (>=1.58), latest **ZeroMQ** (with wrappers *czmq* & *czmqpp*) and expected as well a modern *cmake* (>=3.5) so if you work on an updated develop environment, i.e, *Debian sid*, you are supposed to get by default the correct versions:
 
        rm -rf build && mkdir build && cd build && cmake ..
        
@@ -31,10 +31,12 @@ If you happen to compile a specific version of **boost** libraries for a *clang*
        rm -rf build && mkdir build && cd build && \
        cmake -DBOOST_ROOT=/opt/clang/boost -DCMAKE_CXX_COMPILER=/opt/clang/bin/clang++ ..
 
-Something similar if you work on *OSX* (provided Homebrew installed boost libraries at /usr/local/Cellar/boost/1.60.0_1). In this case no need to worry about *llvm/libc++*; on **Apple** platfomrs is the stardard choice (it seems that Google Android & Windows are following that path as well):
+Something similar if you work on *OSX* (provided Homebrew installed boost libraries at /usr/local/Cellar/boost/1.60.0_1 and zmq/zmqpp/czmp/czmpp ZeroMQ libraries). In this case no need to worry about *llvm/libc++*; on **Apple** platfomrs is the stardard choice (it seems that Google Android & Windows are following that path as well):
 
        bash -c "rm -rf build && mkdir build && cd build && \
-       cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .."
+       cmake -DBOOST_ROOT=/usr/local/Cellar/boost/1.60.0_1 \
+             -DCZMQPP_ROOT=/opt/czmqpp \
+             -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .."
 
 **Note:** Default flags are defined to statically link as much as possible depending on different systems in order not to require latest development compilers/libraries on deployment machines:
 
