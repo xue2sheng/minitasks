@@ -18,7 +18,7 @@ int basic(int x)
     assert(streq(pong, "pong"));
     zstr_free(&pong);
 
- return 1 + x; 
+ return 1 + x + extra(2); 
 }  
 
 int extra(int y)

@@ -11,6 +11,8 @@ int main(int argc, char** argv)
 	Plugin plugin {options.plugin()};
 
 	std::cout << "Plugin value: " << plugin.handle(options.symbol())(5) << std::endl;
+	std::cout << "Host:Port = " << options.host() << ":" << options.port() << std::endl;
+	std::cout << "Auxiliar.symbol = " << options.auxiliar() << std::endl;
     }
     catch(const BaseException& e)
     {
