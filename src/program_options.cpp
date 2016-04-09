@@ -1,3 +1,5 @@
+#include <sstream>
+#include "boost/program_options.hpp"
 #include "version.hpp"
 #include "program_options.hpp"
 
@@ -17,14 +19,17 @@
   
 ProgramOptions::ProgramOptions(int argc, char** argv)  
 {
+        std::string plugin_path;
+        std::string plugin_name;
+
 	// Define and parse the program options
         namespace po = boost::program_options;
         po::options_description desc("Options");
         desc.add_options()
         ("help,h", "Print help messages")
         ("version,v", "Print version messages")
-        ("location,L", po::value<std::string>(&plugin_path_)->default_value("."), "where libraries are located")
-        ("plugin,P", po::value<std::string>(&plugin_name_)->default_value("basic"), "name of the plugin to be loaded");
+        ("location,L", po::value<std::string>(&plugin_path)->default_value("."), "where libraries are located")
+        ("plugin,P", po::value<std::string>(&plugin_name)->default_value("basic"), "name of the plugin to be loaded");
       
         // command line arguments
         po::variables_map vm;
@@ -33,7 +38,11 @@ ProgramOptions::ProgramOptions(int argc, char** argv)
             po::store(po::parse_command_line(argc, argv, desc), vm); // can throw
             
             // --help option
-            if ( vm.count("help") ) { throw Help{desc}; }
+            if ( vm.count("help") ) { 
+	        std::ostringstream oss; 
+	        oss << "Basic Command Line Parameter App" << std::endl << desc; 
+		throw Help{oss.str().c_str()}; 
+	    }
             
             // --version option
 	    else if ( vm.count("version") ) { throw Version{VERSION_INFO}; }
@@ -47,6 +56,6 @@ ProgramOptions::ProgramOptions(int argc, char** argv)
         }
         
         // load basic library
-        plugin_ = plugin_path_ + DIR_SEP + LIB_PRE + plugin_name_ + LIB_EXT;
+        plugin_ = plugin_path + DIR_SEP + LIB_PRE + plugin_name + LIB_EXT;
     
 } // constructor

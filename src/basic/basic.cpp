@@ -1,7 +1,7 @@
 #include <czmq++/czmqpp.hpp>
 #include "basic.hpp"
 
-int basic() 
+int basic(int x) 
 { 
     auto test_cb = [](czmqpp::socket& pipe)
     {
@@ -17,7 +17,6 @@ int basic()
     char *pong = zstr_recv(pipe.self());
     assert(streq(pong, "pong"));
     zstr_free(&pong);
-    puts("OK");
 
- return 1; 
+ return 1 + x; 
 }  
