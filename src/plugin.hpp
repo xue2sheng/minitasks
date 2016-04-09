@@ -26,11 +26,12 @@ public:
     // shouldn't throw
     virtual ~Plugin();
 
-    // getters
-    inline basic handle() const { return handle_; } 
+    // get function from library
+    virtual basic handle(const std::string&); 
 
 private:
     basic handle_ {nullptr}; 
+    std::string last_symbol {""};
     void* library_ {nullptr};
 }; // class 
 

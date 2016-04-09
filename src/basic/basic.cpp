@@ -20,3 +20,8 @@ int basic(int x)
 
  return 1 + x; 
 }  
+
+int extra(int y)
+{
+    return 13*y;
+}

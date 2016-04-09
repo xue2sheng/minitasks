@@ -7,9 +7,10 @@ int main(int argc, char** argv)
 {
     try
     {
-	Plugin plugin {ProgramOptions(argc,argv).plugin()};
+	ProgramOptions options(argc,argv);
+	Plugin plugin {options.plugin()};
 
-	std::cout << "Plugin value: " << plugin.handle()(5) << std::endl;
+	std::cout << "Plugin value: " << plugin.handle(options.symbol())(5) << std::endl;
     }
     catch(const BaseException& e)
     {

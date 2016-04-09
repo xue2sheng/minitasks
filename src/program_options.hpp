@@ -26,9 +26,11 @@ public:
 
   // Getters
   inline std::string plugin() const { return plugin_; }
+  inline std::string symbol() const { return symbol_; }
 
 private:
   std::string plugin_ {""};
+  std::string symbol_ {""};
 };
 
 #endif // PROGRAM_OPTIONS_HPP

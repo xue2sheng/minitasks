@@ -29,7 +29,8 @@ ProgramOptions::ProgramOptions(int argc, char** argv)
         ("help,h", "Print help messages")
         ("version,v", "Print version messages")
         ("location,L", po::value<std::string>(&plugin_path)->default_value("."), "where libraries are located")
-        ("plugin,P", po::value<std::string>(&plugin_name)->default_value("basic"), "name of the plugin to be loaded");
+        ("plugin,P", po::value<std::string>(&plugin_name)->default_value("basic"), "name of the plugin to be loaded")
+        ("symbol,S", po::value<std::string>(&symbol_)->default_value("basic"), "symbol to be found in plugin");
       
         // command line arguments
         po::variables_map vm;
